@@ -41,7 +41,7 @@ NUM_CHANNELS = 3
 NUM_CLASSES = 1001
 
 NUM_IMAGES = {
-    'train': 896772,
+    'train': 2946634,
     'validation': 50000,
 }
 
@@ -283,7 +283,7 @@ def input_fn(is_training,
   # cycle_length = 10 means that up to 10 files will be read and deserialized in
   # parallel. You may want to increase this number if you have a large number of
   # CPU cores.
-  dataset = dataset.interleave(tf.data.TFRecordDataset, cycle_length=10, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+  #dataset = dataset.interleave(tf.data.TFRecordDataset, cycle_length=10, num_parallel_calls=tf.data.experimental.AUTOTUNE)
 
   if is_training and training_dataset_cache:
     # Improve training performance when training data is in remote storage and
