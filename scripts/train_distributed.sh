@@ -22,8 +22,16 @@ LUSTRE_TRAIN_SIZE=2946634
 SKIP_EVAL=""
 SHARD_SIZE=1024
 
+
+OUTPUT=$(squeue --me -j $SLURM_JOBID | awk 'NR > 1 {print $8}')
+
+echo "$OUTPUT"
+
+WORKER_HOSTS=$(python3 split_nodelist_workers.py $OUTPUT | sed 's/ c/,c/g' | sed 's/ //g')
+#WORKER_HOSTS=$(python3 split_nodelist_workers.py $OUTPUT | sed 's/ c/,c/g' | sed 's/ //g' | sed 's/[^,]*,\(.*\)/\1/g')
+
 DISTRIBUTION_STRATEGY="multi_worker_mirrored"
-WORKER_HOSTS="localhost:2222"
+#WORKER_HOSTS="localhost:2222"
 ALL_REDUCE_ALG="ring"
 TASK_INDEX=0
 
