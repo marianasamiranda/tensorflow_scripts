@@ -27,8 +27,8 @@ OUTPUT=$(squeue --me -j $SLURM_JOBID | awk 'NR > 1 {print $8}')
 
 echo "$OUTPUT"
 
-WORKER_HOSTS=$(python3 split_nodelist_workers.py $OUTPUT | sed 's/ c/,c/g' | sed 's/ //g')
-#WORKER_HOSTS=$(python3 split_nodelist_workers.py $OUTPUT | sed 's/ c/,c/g' | sed 's/ //g' | sed 's/[^,]*,\(.*\)/\1/g')
+#WORKER_HOSTS=$(python3 split_nodelist_workers.py $OUTPUT | sed 's/ c/,c/g' | sed 's/ //g')
+WORKER_HOSTS=$(python3 split_nodelist_workers.py $OUTPUT | sed 's/ c/,c/g' | sed 's/ //g' | sed 's/[^,]*,\(.*\)/\1/g')
 
 DISTRIBUTION_STRATEGY="multi_worker_mirrored"
 #WORKER_HOSTS="localhost:2222"
@@ -59,7 +59,8 @@ function train-model {
 	then 
 		echo -e "Model: LeNet\nDataset: ImageNet\nBatch size: $BATCH_SIZE\nEpochs: $EPOCHS\nShuffle Buffer: $SHUFFLE_BUFFER\nGPUs: $NUM_GPUS\nFramework: Tensorflow \nDataset:${DATASET_DIR}"> $RUN_DIR/info.txt
 		python3 $SCRIPT_DIR/lenet_imagenet_main.py $SKIP_EVAL --train_epochs=$EPOCHS --batch_size=$BATCH_SIZE --model_dir=$CHECKPOINTING_DIR --data_dir=$DATASET_DIR --num_gpus=$NUM_GPUS --distribution_strategy=$DISTRIBUTION_STRATEGY --worker_hosts=$WORKER_HOSTS --all_reduce_alg=$ALL_REDUCE_ALG --task_index=$TASK_INDEX |& tee $RUN_DIR/log.txt
-		#python3 $SCRIPT_DIR/lenet_imagenet_main.py $SKIP_EVAL --train_epochs=$EPOCHS --batch_size=$BATCH_SIZE --model_dir=$CHECKPOINTING_DIR --data_dir=$DATASET_DIR --num_gpus=$NUM_GPUS  --distribution_strategy=$DISTRIBUTION_STRATEGY  --worker_hosts="c197-042:2222" --all_reduce_alg=$ALL_REDUCE_ALG --task_index=$TASK_INDEX |& tee $RUN_DIR/log.txt
+		#LD_PRELOAD=$path_padll/libpadll.so python3 $SCRIPT_DIR/lenet_imagenet_main.py $SKIP_EVAL --train_epochs=$EPOCHS --batch_size=$BATCH_SIZE --model_dir=$CHECKPOINTING_DIR --data_dir=$DATASET_DIR --num_gpus=$NUM_GPUS --distribution_strategy=$DISTRIBUTION_STRATEGY --worker_hosts=$WORKER_HOSTS --all_reduce_alg=$ALL_REDUCE_ALG --task_index=$TASK_INDEX |& tee $RUN_DIR/log.txt
+		python3 $SCRIPT_DIR/lenet_imagenet_main.py $SKIP_EVAL --train_epochs=$EPOCHS --batch_size=$BATCH_SIZE --model_dir=$CHECKPOINTING_DIR --data_dir=$DATASET_DIR --num_gpus=$NUM_GPUS  --distribution_strategy=$DISTRIBUTION_STRATEGY  --worker_hosts="c197-042:2222" --all_reduce_alg=$ALL_REDUCE_ALG --task_index=$TASK_INDEX |& tee $RUN_DIR/log.txt
 	else
 		echo "Select a valid model. Run train-model -h to see the available models"
 	fi

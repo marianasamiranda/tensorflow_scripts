@@ -41,7 +41,7 @@ for line in x:
 							print("0",end="")
 							print(str(num_begin) + ":2222", end=" ")
 						else:
-							print(num_begin)
+							print(str(num_begin) + ":2222" )
 						num_begin = num_begin + 1
 				else:
 					print(xx[0],end="-")
