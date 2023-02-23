@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VENV_DIR="${HOME}/tensorflow-venv"
+VENV_DIR="${1}/tensorflow-venv"
 
 echo "rm -rf ${VENV_DIR}"
 rm -rf $VENV_DIR
