@@ -15,4 +15,4 @@ echo "pip3 install --upgrade pip"
 pip3 install --upgrade pip
 
 echo "pip install tensorflow==2.3.2"
-pip install tensorflow==2.3.2
+pip install tensorflow
