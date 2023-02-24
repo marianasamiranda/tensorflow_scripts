@@ -2,9 +2,9 @@
 
 # Change these variables (if needed)
 # ======================================================================================
-WORKSPACE=$(dirname $(dirname $(realpath $0)))
-SCRIPT_DIR="${WORKSPACE}/models/official-models-2.1.0/official/vision/image_classification"
-VENV_DIR="${HOME}/tensorflow-venv"
+WORKSPACE="/usr/local"
+SCRIPT_DIR="${WORKSPACE}/tensorflow_scripts/models/official-models-2.1.0/official/vision/image_classification"
+VENV_DIR="${WORKSPACE}/tensorflow-venv"
 CHECKPOINTING_DIR="/tmp/checkpointing"
 # ======================================================================================
 
