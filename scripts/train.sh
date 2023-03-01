@@ -24,7 +24,7 @@ SHARD_SIZE=1024
 
 # Functions
 function export-vars {
-	export PYTHONPATH=$PYTHONPATH:${WORKSPACE}/models/official-models-2.1.0
+	export PYTHONPATH=$PYTHONPATH:${WORKSPACE}/tensorflow_scripts/models/official-models-2.1.0
 }
 
 function monitor {
