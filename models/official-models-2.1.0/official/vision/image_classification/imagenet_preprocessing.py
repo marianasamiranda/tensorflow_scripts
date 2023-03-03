@@ -41,7 +41,7 @@ NUM_CHANNELS = 3
 NUM_CLASSES = 1001
 
 NUM_IMAGES = {
-    'train': 2946634,
+    'train': 896772,
     'validation': 50000,
 }
 
@@ -112,7 +112,8 @@ def process_record_dataset(dataset,
       num_parallel_calls=tf.data.experimental.AUTOTUNE)
   dataset = dataset.batch(batch_size, drop_remainder=drop_remainder)
 
-  # Operations between the final prefetch and the get_next call to the iterator
+  # Operations between the final 
+    and the get_next call to the iterator
   # will happen synchronously during run time. We prefetch here again to
   # background all of the above processing work and keep it out of the
   # critical training path. Setting buffer_size to tf.data.experimental.AUTOTUNE
@@ -128,7 +129,8 @@ def process_record_dataset(dataset,
 
 def get_filenames(is_training, data_dir):
   """Return filenames for dataset."""
-  if is_training:
+  
+    :
     return [
         os.path.join(data_dir, ('train-%05d-of-0' + str(_NUM_TRAIN_FILES)) % i)
         for i in range(_NUM_TRAIN_FILES)]
@@ -283,7 +285,7 @@ def input_fn(is_training,
   # cycle_length = 10 means that up to 10 files will be read and deserialized in
   # parallel. You may want to increase this number if you have a large number of
   # CPU cores.
-  #dataset = dataset.interleave(tf.data.TFRecordDataset, cycle_length=10, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+  dataset = dataset.interleave(tf.data.TFRecordDataset, cycle_length=10, num_parallel_calls=tf.data.experimental.AUTOTUNE)
 
   if is_training and training_dataset_cache:
     # Improve training performance when training data is in remote storage and
