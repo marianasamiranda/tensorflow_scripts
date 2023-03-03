@@ -113,7 +113,7 @@ def process_record_dataset(dataset,
   dataset = dataset.batch(batch_size, drop_remainder=drop_remainder)
 
   # Operations between the final 
-    and the get_next call to the iterator
+  # and the get_next call to the iterator
   # will happen synchronously during run time. We prefetch here again to
   # background all of the above processing work and keep it out of the
   # critical training path. Setting buffer_size to tf.data.experimental.AUTOTUNE
@@ -130,7 +130,7 @@ def process_record_dataset(dataset,
 def get_filenames(is_training, data_dir):
   """Return filenames for dataset."""
   
-    :
+  if is_training:
     return [
         os.path.join(data_dir, ('train-%05d-of-0' + str(_NUM_TRAIN_FILES)) % i)
         for i in range(_NUM_TRAIN_FILES)]
